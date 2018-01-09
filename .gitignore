@@ -17,3 +17,7 @@
 /external
 
 !CMakeLists.txt
+
+nimcache/
+nimcache/*.*
+slicc.exe
