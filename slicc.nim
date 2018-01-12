@@ -9,8 +9,69 @@ proc cstr(str: astring): cstring {.importcpp:"#.c_str()".}
 proc size(res: stdvector_Resource): csize {.importcpp:"#.size()".}
 proc `[]`(res: var stdvector_Resource, index: cint): Resource {.importcpp:"#[#]".}
 
+import moustachu
+let shaderJsTemplate = """
+/*jshint esversion: 6 */
+
+var {{ShaderName}} = pc.createScript('{{ShaderName}}');
+
+{{#FloatAttrib}}
+{{ShaderName}}.attributes.add({{AttribName}}, { type: 'number', default: {{DefaultValue}} });
+
+{{/FloatAttrib}}
+{{#TextureAttrib}}
+{{ShaderName}}.attributes.add('{{TextureName}}', {
+    type: 'asset',
+    assetType: 'texture',
+    title: '{{TextureName}}'
+});
+
+{{/TextureAttrib}}
+{{ShaderName}}.prototype.reloadShader = function() {
+    var app = this.app;
+    var model = this.entity.model.model;
+    var gd = app.graphicsDevice;
+
+    var vertexShader = `
+{{VertexShaderBody}}
+`;
+
+    var pixelShader = `
+{{PixelShaderBody}}
+`;
+
+    var shaderDefinition = {
+        attributes: {
+            aPosition: pc.SEMANTIC_POSITION,
+            aUv0: pc.SEMANTIC_TEXCOORD0
+        },
+        vshader: vertexShader,
+        fshader: fragmentShader
+    };
+
+    // Create the shader from the definition
+    this.shader = new pc.Shader(gd, shaderDefinition);
+
+    // Create a new material and set the shader
+    this.material = new pc.Material();
+    this.material.setShader(this.shader);
+
+    // Replace the material on the model with our new material
+    model.meshInstances[0].material = this.material;
+};
+
+// initialize code called once per entity
+{{ShaderName}}.prototype.initialize = function() {    
+    this.reloadShader();
+};
+
+{{ShaderName}}.prototype.swap = function(old) {
+    this.reloadShader();
+};
+"""
+
 # ..\tmp\glslang-install\bin\glslangValidator.exe -H -V -o test.spv shaders\frag\basic.frag
-var spirvFile = open("test.spv")
+var spirvFile = open("vert.spv")
 var spirvFileSize32 = int ceil int(spirvFile.getFileSize) / 4
 var buffer = newSeq[uint8](spirvFile.getFileSize)
 var spirvData = initspirv()
@@ -22,9 +83,9 @@ for i in 0..<spirvFileSize32:
 
 var glsl = cppnew initCompilerGLSL(spirvData)
 var glslOptions = initOptions()
-# glslOptions.es = true
-# glslOptions.version = 310
-glslOptions.vulkansemantics = true
+glslOptions.es = true
+glslOptions.version = 100
+# glslOptions.vulkansemantics = true
 glsl[].setoptions(glslOptions)
 # glsl.AsCompiler()[].buildcombinedimagesamplers()
 var glslCompiled = glsl.AsCompiler()[].compile()
@@ -40,6 +101,7 @@ template printInfo(): untyped =
   echo resource.name.cstr, " ", $decorationSet, " ", $decorationBinding, " ", $decorationLocation
 
 var sampledImages = resources.sampledimages
+# var sampledImage
 echo "SAMPLED IMAGES:"
 for i in 0..<sampledImages.size:
   var resource = sampledImages[cint i]
