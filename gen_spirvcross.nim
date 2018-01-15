@@ -156,61 +156,61 @@ type Options000000* {.pure, exportc, importcpp:"spirv_cross::CompilerMSL::Option
 type CompilerCPP* {.header: "spirvcross.hpp", importcpp:"spirv_cross::CompilerCPP", inheritable.}  = object
 type Bytetraits* {.header: "spirvcross.hpp", importcpp:"std::char_traits<char>", inheritable.}  = object
 type allocator* {.header: "spirvcross.hpp", importcpp:"std::allocator<char>", inheritable.}  = object
-type astring* {.header: "spirvcross.hpp", importcpp:"std::basic_string<char, std::char_traits<char>, std::allocator<char> >", inheritable.}  = object
-type allocator00* {.header: "spirvcross.hpp", importcpp:"std::allocator<std::basic_string<char, std::char_traits<char>, std::allocator<char> > >", inheritable.}  = object
-type stdvector_stdstring* {.header: "spirvcross.hpp", importcpp:"std::vector<std::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::basic_string<char, std::char_traits<char>, std::allocator<char> > > >", inheritable.}  = object
+type astring* {.header: "spirvcross.hpp", importcpp:"std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> >", inheritable.}  = object
+type allocator00* {.header: "spirvcross.hpp", importcpp:"std::allocator<std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> > >", inheritable.}  = object
+type stdvector_stdstring* {.header: "spirvcross.hpp", importcpp:"std::vector<std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> > COMMA  std::allocator<std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> > > >", inheritable.}  = object
 type allocator0000* {.header: "spirvcross.hpp", importcpp:"std::allocator<unsigned int>", inheritable.}  = object
-type spirv* {.header: "spirvcross.hpp", importcpp:"std::vector<unsigned int, std::allocator<unsigned int> >", inheritable.}  = object
+type spirv* {.header: "spirvcross.hpp", importcpp:"std::vector<unsigned int COMMA  std::allocator<unsigned int> >", inheritable.}  = object
 type allocator000000* {.header: "spirvcross.hpp", importcpp:"std::allocator<bool>", inheritable.}  = object
-type stdvector_bool* {.header: "spirvcross.hpp", importcpp:"std::vector<bool, std::allocator<bool> >", inheritable.}  = object
-type hash* {.header: "spirvcross.hpp", importcpp:"std::hash<std::basic_string<char, std::char_traits<char>, std::allocator<char> > >", inheritable.}  = object
-type equalto* {.header: "spirvcross.hpp", importcpp:"std::equal_to<std::basic_string<char, std::char_traits<char>, std::allocator<char> > >", inheritable.}  = object
-type stdunorderedset_stdstring* {.header: "spirvcross.hpp", importcpp:"std::unordered_set<std::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::hash<std::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::equal_to<std::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::basic_string<char, std::char_traits<char>, std::allocator<char> > > >", inheritable.}  = object
+type stdvector_bool* {.header: "spirvcross.hpp", importcpp:"std::vector<bool COMMA  std::allocator<bool> >", inheritable.}  = object
+type hash* {.header: "spirvcross.hpp", importcpp:"std::hash<std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> > >", inheritable.}  = object
+type equalto* {.header: "spirvcross.hpp", importcpp:"std::equal_to<std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> > >", inheritable.}  = object
+type stdunorderedset_stdstring* {.header: "spirvcross.hpp", importcpp:"std::unordered_set<std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> > COMMA  std::hash<std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> > > COMMA  std::equal_to<std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> > > COMMA  std::allocator<std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> > > >", inheritable.}  = object
 type allocator00000000* {.header: "spirvcross.hpp", importcpp:"std::allocator<spirv_cross::Instruction>", inheritable.}  = object
-type stdvector_Instruction* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::Instruction, std::allocator<spirv_cross::Instruction> >", inheritable.}  = object
+type stdvector_Instruction* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::Instruction COMMA  std::allocator<spirv_cross::Instruction> >", inheritable.}  = object
 type allocator0000000000* {.header: "spirvcross.hpp", importcpp:"std::allocator<spirv_cross::SPIRBlock::Phi>", inheritable.}  = object
-type stdvector_Phi* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::SPIRBlock::Phi, std::allocator<spirv_cross::SPIRBlock::Phi> >", inheritable.}  = object
-type pair* {.header: "spirvcross.hpp", importcpp:"std::pair<unsigned int, unsigned int>", inheritable.}  = object
-type allocator000000000000* {.header: "spirvcross.hpp", importcpp:"std::allocator<std::pair<unsigned int, unsigned int> >", inheritable.}  = object
-type stdvector_stdpair_uint32t_uint32t* {.header: "spirvcross.hpp", importcpp:"std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >", inheritable.}  = object
+type stdvector_Phi* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::SPIRBlock::Phi COMMA  std::allocator<spirv_cross::SPIRBlock::Phi> >", inheritable.}  = object
+type pair* {.header: "spirvcross.hpp", importcpp:"std::pair<unsigned int COMMA  unsigned int>", inheritable.}  = object
+type allocator000000000000* {.header: "spirvcross.hpp", importcpp:"std::allocator<std::pair<unsigned int COMMA  unsigned int> >", inheritable.}  = object
+type stdvector_stdpair_uint32t_uint32t* {.header: "spirvcross.hpp", importcpp:"std::vector<std::pair<unsigned int COMMA  unsigned int> COMMA  std::allocator<std::pair<unsigned int COMMA  unsigned int> > >", inheritable.}  = object
 type allocator00000000000000* {.header: "spirvcross.hpp", importcpp:"std::allocator<spirv_cross::SPIRBlock::Case>", inheritable.}  = object
-type stdvector_Case* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::SPIRBlock::Case, std::allocator<spirv_cross::SPIRBlock::Case> >", inheritable.}  = object
+type stdvector_Case* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::SPIRBlock::Case COMMA  std::allocator<spirv_cross::SPIRBlock::Case> >", inheritable.}  = object
 type allocator0000000000000000* {.header: "spirvcross.hpp", importcpp:"std::allocator<spirv_cross::SPIRFunction::Parameter>", inheritable.}  = object
-type stdvector_Parameter* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::SPIRFunction::Parameter, std::allocator<spirv_cross::SPIRFunction::Parameter> >", inheritable.}  = object
+type stdvector_Parameter* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::SPIRFunction::Parameter COMMA  std::allocator<spirv_cross::SPIRFunction::Parameter> >", inheritable.}  = object
 type allocator000000000000000000* {.header: "spirvcross.hpp", importcpp:"std::allocator<spirv_cross::SPIRFunction::CombinedImageSamplerParameter>", inheritable.}  = object
-type stdvector_CombinedImageSamplerParameter* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::SPIRFunction::CombinedImageSamplerParameter, std::allocator<spirv_cross::SPIRFunction::CombinedImageSamplerParameter> >", inheritable.}  = object
+type stdvector_CombinedImageSamplerParameter* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::SPIRFunction::CombinedImageSamplerParameter COMMA  std::allocator<spirv_cross::SPIRFunction::CombinedImageSamplerParameter> >", inheritable.}  = object
 type defaultdelete* {.header: "spirvcross.hpp", importcpp:"std::default_delete<spirv_cross::IVariant>", inheritable.}  = object
-type stduniquecptr_IVariant* {.header: "spirvcross.hpp", importcpp:"std::unique_ptr<spirv_cross::IVariant, std::default_delete<spirv_cross::IVariant> >", inheritable.}  = object
+type stduniquecptr_IVariant* {.header: "spirvcross.hpp", importcpp:"std::unique_ptr<spirv_cross::IVariant COMMA  std::default_delete<spirv_cross::IVariant> >", inheritable.}  = object
 type allocator00000000000000000000* {.header: "spirvcross.hpp", importcpp:"std::allocator<spirv_cross::Meta::Decoration>", inheritable.}  = object
-type stdvector_Decoration* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::Meta::Decoration, std::allocator<spirv_cross::Meta::Decoration> >", inheritable.}  = object
+type stdvector_Decoration* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::Meta::Decoration COMMA  std::allocator<spirv_cross::Meta::Decoration> >", inheritable.}  = object
 type hash00* {.header: "spirvcross.hpp", importcpp:"std::hash<unsigned int>", inheritable.}  = object
 type equalto00* {.header: "spirvcross.hpp", importcpp:"std::equal_to<unsigned int>", inheritable.}  = object
-type pair00* {.header: "spirvcross.hpp", importcpp:"std::pair<const unsigned int, unsigned int>", inheritable.}  = object
-type allocator0000000000000000000000* {.header: "spirvcross.hpp", importcpp:"std::allocator<std::pair<const unsigned int, unsigned int> >", inheritable.}  = object
-type stdunorderedmap_uint32t_uint32t* {.header: "spirvcross.hpp", importcpp:"std::unordered_map<unsigned int, unsigned int, std::hash<unsigned int>, std::equal_to<unsigned int>, std::allocator<std::pair<const unsigned int, unsigned int> > >", inheritable.}  = object
+type pair00* {.header: "spirvcross.hpp", importcpp:"std::pair<const unsigned int COMMA  unsigned int>", inheritable.}  = object
+type allocator0000000000000000000000* {.header: "spirvcross.hpp", importcpp:"std::allocator<std::pair<const unsigned int COMMA  unsigned int> >", inheritable.}  = object
+type stdunorderedmap_uint32t_uint32t* {.header: "spirvcross.hpp", importcpp:"std::unordered_map<unsigned int COMMA  unsigned int COMMA  std::hash<unsigned int> COMMA  std::equal_to<unsigned int> COMMA  std::allocator<std::pair<const unsigned int COMMA  unsigned int> > >", inheritable.}  = object
 type allocator000000000000000000000000* {.header: "spirvcross.hpp", importcpp:"std::allocator<spirv_cross::Resource>", inheritable.}  = object
-type stdvector_Resource* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::Resource, std::allocator<spirv_cross::Resource> >", inheritable.}  = object
+type stdvector_Resource* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::Resource COMMA  std::allocator<spirv_cross::Resource> >", inheritable.}  = object
 type allocator00000000000000000000000000* {.header: "spirvcross.hpp", importcpp:"std::allocator<spirv_cross::BufferRange>", inheritable.}  = object
-type vector0* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::BufferRange, std::allocator<spirv_cross::BufferRange> >", inheritable.}  = object
-type stdunorderedset_uint32t* {.header: "spirvcross.hpp", importcpp:"std::unordered_set<unsigned int, std::hash<unsigned int>, std::equal_to<unsigned int>, std::allocator<unsigned int> >", inheritable.}  = object
+type vector0* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::BufferRange COMMA  std::allocator<spirv_cross::BufferRange> >", inheritable.}  = object
+type stdunorderedset_uint32t* {.header: "spirvcross.hpp", importcpp:"std::unordered_set<unsigned int COMMA  std::hash<unsigned int> COMMA  std::equal_to<unsigned int> COMMA  std::allocator<unsigned int> >", inheritable.}  = object
 type allocator0000000000000000000000000000* {.header: "spirvcross.hpp", importcpp:"std::allocator<spirv_cross::CombinedImageSampler>", inheritable.}  = object
-type stdvector_CombinedImageSampler* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::CombinedImageSampler, std::allocator<spirv_cross::CombinedImageSampler> >", inheritable.}  = object
+type stdvector_CombinedImageSampler* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::CombinedImageSampler COMMA  std::allocator<spirv_cross::CombinedImageSampler> >", inheritable.}  = object
 type a000000000000* {.header: "spirvcross.hpp", importcpp:"", inheritable.}  = object
-type VariableTypeRemapCallback* {.header: "spirvcross.hpp", importcpp:"std::function<void (const spirv_cross::SPIRType &, const std::basic_string<char, std::char_traits<char>, std::allocator<char> > &, std::basic_string<char, std::char_traits<char>, std::allocator<char> > &)>", inheritable.}  = object
+type VariableTypeRemapCallback* {.header: "spirvcross.hpp", importcpp:"std::function<void (const spirv_cross::SPIRType & COMMA  const std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> > & COMMA  std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> > &)>", inheritable.}  = object
 type a00000000000000* {.header: "spirvcross.hpp", importcpp:"", inheritable.}  = object
 type a0000000000000000* {.header: "spirvcross.hpp", importcpp:"", inheritable.}  = object
 type allocator000000000000000000000000000000* {.header: "spirvcross.hpp", importcpp:"std::allocator<spirv_cross::SpecializationConstant>", inheritable.}  = object
-type vector000* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::SpecializationConstant, std::allocator<spirv_cross::SpecializationConstant> >", inheritable.}  = object
+type vector000* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::SpecializationConstant COMMA  std::allocator<spirv_cross::SpecializationConstant> >", inheritable.}  = object
 type allocator00000000000000000000000000000000* {.header: "spirvcross.hpp", importcpp:"std::allocator<spv::Capability>", inheritable.}  = object
-type stdvector_spvCapability* {.header: "spirvcross.hpp", importcpp:"std::vector<spv::Capability, std::allocator<spv::Capability> >", inheritable.}  = object
+type stdvector_spvCapability* {.header: "spirvcross.hpp", importcpp:"std::vector<spv::Capability COMMA  std::allocator<spv::Capability> >", inheritable.}  = object
 type allocator0000000000000000000000000000000000* {.header: "spirvcross.hpp", importcpp:"std::allocator<spirv_cross::PlsRemap>", inheritable.}  = object
-type stdvector_PlsRemap* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::PlsRemap, std::allocator<spirv_cross::PlsRemap> >", inheritable.}  = object
+type stdvector_PlsRemap* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::PlsRemap COMMA  std::allocator<spirv_cross::PlsRemap> >", inheritable.}  = object
 type allocator000000000000000000000000000000000000* {.header: "spirvcross.hpp", importcpp:"std::allocator<spirv_cross::HLSLVertexAttributeRemap>", inheritable.}  = object
-type stdvector_HLSLVertexAttributeRemap* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::HLSLVertexAttributeRemap, std::allocator<spirv_cross::HLSLVertexAttributeRemap> >", inheritable.}  = object
+type stdvector_HLSLVertexAttributeRemap* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::HLSLVertexAttributeRemap COMMA  std::allocator<spirv_cross::HLSLVertexAttributeRemap> >", inheritable.}  = object
 type allocator00000000000000000000000000000000000000* {.header: "spirvcross.hpp", importcpp:"std::allocator<spirv_cross::MSLVertexAttr>", inheritable.}  = object
-type vector00000* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::MSLVertexAttr, std::allocator<spirv_cross::MSLVertexAttr> >", inheritable.}  = object
+type vector00000* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::MSLVertexAttr COMMA  std::allocator<spirv_cross::MSLVertexAttr> >", inheritable.}  = object
 type allocator0000000000000000000000000000000000000000* {.header: "spirvcross.hpp", importcpp:"std::allocator<spirv_cross::MSLResourceBinding>", inheritable.}  = object
-type vector0000000* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::MSLResourceBinding, std::allocator<spirv_cross::MSLResourceBinding> >", inheritable.}  = object
+type vector0000000* {.header: "spirvcross.hpp", importcpp:"std::vector<spirv_cross::MSLResourceBinding COMMA  std::allocator<spirv_cross::MSLResourceBinding> >", inheritable.}  = object
 proc AsIVariant*(self: ptr SPIRUndef): ptr IVariant = cast[ptr IVariant](self)
 proc AsIVariant*(self: ptr SPIRCombinedImageSampler): ptr IVariant = cast[ptr IVariant](self)
 proc AsIVariant*(self: ptr SPIRConstantOp): ptr IVariant = cast[ptr IVariant](self)
@@ -930,87 +930,87 @@ proc initBytetraits*(): Bytetraits {.importcpp: "std::char_traits<char>(@)".}
 proc deleteBytetraits*(self: ptr Bytetraits) {.importcpp: "delete #".}
 proc initallocator*(): allocator {.importcpp: "std::allocator<char>(@)".}
 proc deleteallocator*(self: ptr allocator) {.importcpp: "delete #".}
-proc initastring*(): astring {.importcpp: "std::basic_string<char, std::char_traits<char>, std::allocator<char> >(@)".}
+proc initastring*(): astring {.importcpp: "std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> >(@)".}
 proc deleteastring*(self: ptr astring) {.importcpp: "delete #".}
-proc initallocator00*(): allocator00 {.importcpp: "std::allocator<std::basic_string<char, std::char_traits<char>, std::allocator<char> > >(@)".}
+proc initallocator00*(): allocator00 {.importcpp: "std::allocator<std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> > >(@)".}
 proc deleteallocator00*(self: ptr allocator00) {.importcpp: "delete #".}
-proc initstdvector_stdstring*(): stdvector_stdstring {.importcpp: "std::vector<std::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::basic_string<char, std::char_traits<char>, std::allocator<char> > > >(@)".}
+proc initstdvector_stdstring*(): stdvector_stdstring {.importcpp: "std::vector<std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> > COMMA  std::allocator<std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> > > >(@)".}
 proc deletestdvector_stdstring*(self: ptr stdvector_stdstring) {.importcpp: "delete #".}
 proc initallocator0000*(): allocator0000 {.importcpp: "std::allocator<unsigned int>(@)".}
 proc deleteallocator0000*(self: ptr allocator0000) {.importcpp: "delete #".}
-proc initspirv*(): spirv {.importcpp: "std::vector<unsigned int, std::allocator<unsigned int> >(@)".}
+proc initspirv*(): spirv {.importcpp: "std::vector<unsigned int COMMA  std::allocator<unsigned int> >(@)".}
 proc deletespirv*(self: ptr spirv) {.importcpp: "delete #".}
 proc initallocator000000*(): allocator000000 {.importcpp: "std::allocator<bool>(@)".}
 proc deleteallocator000000*(self: ptr allocator000000) {.importcpp: "delete #".}
-proc initstdvector_bool*(): stdvector_bool {.importcpp: "std::vector<bool, std::allocator<bool> >(@)".}
+proc initstdvector_bool*(): stdvector_bool {.importcpp: "std::vector<bool COMMA  std::allocator<bool> >(@)".}
 proc deletestdvector_bool*(self: ptr stdvector_bool) {.importcpp: "delete #".}
-proc inithash*(): hash {.importcpp: "std::hash<std::basic_string<char, std::char_traits<char>, std::allocator<char> > >(@)".}
+proc inithash*(): hash {.importcpp: "std::hash<std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> > >(@)".}
 proc deletehash*(self: ptr hash) {.importcpp: "delete #".}
-proc initequalto*(): equalto {.importcpp: "std::equal_to<std::basic_string<char, std::char_traits<char>, std::allocator<char> > >(@)".}
+proc initequalto*(): equalto {.importcpp: "std::equal_to<std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> > >(@)".}
 proc deleteequalto*(self: ptr equalto) {.importcpp: "delete #".}
-proc initstdunorderedset_stdstring*(): stdunorderedset_stdstring {.importcpp: "std::unordered_set<std::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::hash<std::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::equal_to<std::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::basic_string<char, std::char_traits<char>, std::allocator<char> > > >(@)".}
+proc initstdunorderedset_stdstring*(): stdunorderedset_stdstring {.importcpp: "std::unordered_set<std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> > COMMA  std::hash<std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> > > COMMA  std::equal_to<std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> > > COMMA  std::allocator<std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> > > >(@)".}
 proc deletestdunorderedset_stdstring*(self: ptr stdunorderedset_stdstring) {.importcpp: "delete #".}
 proc initallocator00000000*(): allocator00000000 {.importcpp: "std::allocator<spirv_cross::Instruction>(@)".}
 proc deleteallocator00000000*(self: ptr allocator00000000) {.importcpp: "delete #".}
-proc initstdvector_Instruction*(): stdvector_Instruction {.importcpp: "std::vector<spirv_cross::Instruction, std::allocator<spirv_cross::Instruction> >(@)".}
+proc initstdvector_Instruction*(): stdvector_Instruction {.importcpp: "std::vector<spirv_cross::Instruction COMMA  std::allocator<spirv_cross::Instruction> >(@)".}
 proc deletestdvector_Instruction*(self: ptr stdvector_Instruction) {.importcpp: "delete #".}
 proc initallocator0000000000*(): allocator0000000000 {.importcpp: "std::allocator<spirv_cross::SPIRBlock::Phi>(@)".}
 proc deleteallocator0000000000*(self: ptr allocator0000000000) {.importcpp: "delete #".}
-proc initstdvector_Phi*(): stdvector_Phi {.importcpp: "std::vector<spirv_cross::SPIRBlock::Phi, std::allocator<spirv_cross::SPIRBlock::Phi> >(@)".}
+proc initstdvector_Phi*(): stdvector_Phi {.importcpp: "std::vector<spirv_cross::SPIRBlock::Phi COMMA  std::allocator<spirv_cross::SPIRBlock::Phi> >(@)".}
 proc deletestdvector_Phi*(self: ptr stdvector_Phi) {.importcpp: "delete #".}
-proc initpair*(): pair {.importcpp: "std::pair<unsigned int, unsigned int>(@)".}
+proc initpair*(): pair {.importcpp: "std::pair<unsigned int COMMA  unsigned int>(@)".}
 proc deletepair*(self: ptr pair) {.importcpp: "delete #".}
-proc initallocator000000000000*(): allocator000000000000 {.importcpp: "std::allocator<std::pair<unsigned int, unsigned int> >(@)".}
+proc initallocator000000000000*(): allocator000000000000 {.importcpp: "std::allocator<std::pair<unsigned int COMMA  unsigned int> >(@)".}
 proc deleteallocator000000000000*(self: ptr allocator000000000000) {.importcpp: "delete #".}
-proc initstdvector_stdpair_uint32t_uint32t*(): stdvector_stdpair_uint32t_uint32t {.importcpp: "std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >(@)".}
+proc initstdvector_stdpair_uint32t_uint32t*(): stdvector_stdpair_uint32t_uint32t {.importcpp: "std::vector<std::pair<unsigned int COMMA  unsigned int> COMMA  std::allocator<std::pair<unsigned int COMMA  unsigned int> > >(@)".}
 proc deletestdvector_stdpair_uint32t_uint32t*(self: ptr stdvector_stdpair_uint32t_uint32t) {.importcpp: "delete #".}
 proc initallocator00000000000000*(): allocator00000000000000 {.importcpp: "std::allocator<spirv_cross::SPIRBlock::Case>(@)".}
 proc deleteallocator00000000000000*(self: ptr allocator00000000000000) {.importcpp: "delete #".}
-proc initstdvector_Case*(): stdvector_Case {.importcpp: "std::vector<spirv_cross::SPIRBlock::Case, std::allocator<spirv_cross::SPIRBlock::Case> >(@)".}
+proc initstdvector_Case*(): stdvector_Case {.importcpp: "std::vector<spirv_cross::SPIRBlock::Case COMMA  std::allocator<spirv_cross::SPIRBlock::Case> >(@)".}
 proc deletestdvector_Case*(self: ptr stdvector_Case) {.importcpp: "delete #".}
 proc initallocator0000000000000000*(): allocator0000000000000000 {.importcpp: "std::allocator<spirv_cross::SPIRFunction::Parameter>(@)".}
 proc deleteallocator0000000000000000*(self: ptr allocator0000000000000000) {.importcpp: "delete #".}
-proc initstdvector_Parameter*(): stdvector_Parameter {.importcpp: "std::vector<spirv_cross::SPIRFunction::Parameter, std::allocator<spirv_cross::SPIRFunction::Parameter> >(@)".}
+proc initstdvector_Parameter*(): stdvector_Parameter {.importcpp: "std::vector<spirv_cross::SPIRFunction::Parameter COMMA  std::allocator<spirv_cross::SPIRFunction::Parameter> >(@)".}
 proc deletestdvector_Parameter*(self: ptr stdvector_Parameter) {.importcpp: "delete #".}
 proc initallocator000000000000000000*(): allocator000000000000000000 {.importcpp: "std::allocator<spirv_cross::SPIRFunction::CombinedImageSamplerParameter>(@)".}
 proc deleteallocator000000000000000000*(self: ptr allocator000000000000000000) {.importcpp: "delete #".}
-proc initstdvector_CombinedImageSamplerParameter*(): stdvector_CombinedImageSamplerParameter {.importcpp: "std::vector<spirv_cross::SPIRFunction::CombinedImageSamplerParameter, std::allocator<spirv_cross::SPIRFunction::CombinedImageSamplerParameter> >(@)".}
+proc initstdvector_CombinedImageSamplerParameter*(): stdvector_CombinedImageSamplerParameter {.importcpp: "std::vector<spirv_cross::SPIRFunction::CombinedImageSamplerParameter COMMA  std::allocator<spirv_cross::SPIRFunction::CombinedImageSamplerParameter> >(@)".}
 proc deletestdvector_CombinedImageSamplerParameter*(self: ptr stdvector_CombinedImageSamplerParameter) {.importcpp: "delete #".}
 proc initdefaultdelete*(): defaultdelete {.importcpp: "std::default_delete<spirv_cross::IVariant>(@)".}
 proc deletedefaultdelete*(self: ptr defaultdelete) {.importcpp: "delete #".}
-proc initstduniquecptr_IVariant*(): stduniquecptr_IVariant {.importcpp: "std::unique_ptr<spirv_cross::IVariant, std::default_delete<spirv_cross::IVariant> >(@)".}
+proc initstduniquecptr_IVariant*(): stduniquecptr_IVariant {.importcpp: "std::unique_ptr<spirv_cross::IVariant COMMA  std::default_delete<spirv_cross::IVariant> >(@)".}
 proc deletestduniquecptr_IVariant*(self: ptr stduniquecptr_IVariant) {.importcpp: "delete #".}
 proc initallocator00000000000000000000*(): allocator00000000000000000000 {.importcpp: "std::allocator<spirv_cross::Meta::Decoration>(@)".}
 proc deleteallocator00000000000000000000*(self: ptr allocator00000000000000000000) {.importcpp: "delete #".}
-proc initstdvector_Decoration*(): stdvector_Decoration {.importcpp: "std::vector<spirv_cross::Meta::Decoration, std::allocator<spirv_cross::Meta::Decoration> >(@)".}
+proc initstdvector_Decoration*(): stdvector_Decoration {.importcpp: "std::vector<spirv_cross::Meta::Decoration COMMA  std::allocator<spirv_cross::Meta::Decoration> >(@)".}
 proc deletestdvector_Decoration*(self: ptr stdvector_Decoration) {.importcpp: "delete #".}
 proc inithash00*(): hash00 {.importcpp: "std::hash<unsigned int>(@)".}
 proc deletehash00*(self: ptr hash00) {.importcpp: "delete #".}
 proc initequalto00*(): equalto00 {.importcpp: "std::equal_to<unsigned int>(@)".}
 proc deleteequalto00*(self: ptr equalto00) {.importcpp: "delete #".}
-proc initpair00*(): pair00 {.importcpp: "std::pair<const unsigned int, unsigned int>(@)".}
+proc initpair00*(): pair00 {.importcpp: "std::pair<const unsigned int COMMA  unsigned int>(@)".}
 proc deletepair00*(self: ptr pair00) {.importcpp: "delete #".}
-proc initallocator0000000000000000000000*(): allocator0000000000000000000000 {.importcpp: "std::allocator<std::pair<const unsigned int, unsigned int> >(@)".}
+proc initallocator0000000000000000000000*(): allocator0000000000000000000000 {.importcpp: "std::allocator<std::pair<const unsigned int COMMA  unsigned int> >(@)".}
 proc deleteallocator0000000000000000000000*(self: ptr allocator0000000000000000000000) {.importcpp: "delete #".}
-proc initstdunorderedmap_uint32t_uint32t*(): stdunorderedmap_uint32t_uint32t {.importcpp: "std::unordered_map<unsigned int, unsigned int, std::hash<unsigned int>, std::equal_to<unsigned int>, std::allocator<std::pair<const unsigned int, unsigned int> > >(@)".}
+proc initstdunorderedmap_uint32t_uint32t*(): stdunorderedmap_uint32t_uint32t {.importcpp: "std::unordered_map<unsigned int COMMA  unsigned int COMMA  std::hash<unsigned int> COMMA  std::equal_to<unsigned int> COMMA  std::allocator<std::pair<const unsigned int COMMA  unsigned int> > >(@)".}
 proc deletestdunorderedmap_uint32t_uint32t*(self: ptr stdunorderedmap_uint32t_uint32t) {.importcpp: "delete #".}
 proc initallocator000000000000000000000000*(): allocator000000000000000000000000 {.importcpp: "std::allocator<spirv_cross::Resource>(@)".}
 proc deleteallocator000000000000000000000000*(self: ptr allocator000000000000000000000000) {.importcpp: "delete #".}
-proc initstdvector_Resource*(): stdvector_Resource {.importcpp: "std::vector<spirv_cross::Resource, std::allocator<spirv_cross::Resource> >(@)".}
+proc initstdvector_Resource*(): stdvector_Resource {.importcpp: "std::vector<spirv_cross::Resource COMMA  std::allocator<spirv_cross::Resource> >(@)".}
 proc deletestdvector_Resource*(self: ptr stdvector_Resource) {.importcpp: "delete #".}
 proc initallocator00000000000000000000000000*(): allocator00000000000000000000000000 {.importcpp: "std::allocator<spirv_cross::BufferRange>(@)".}
 proc deleteallocator00000000000000000000000000*(self: ptr allocator00000000000000000000000000) {.importcpp: "delete #".}
-proc initvector0*(): vector0 {.importcpp: "std::vector<spirv_cross::BufferRange, std::allocator<spirv_cross::BufferRange> >(@)".}
+proc initvector0*(): vector0 {.importcpp: "std::vector<spirv_cross::BufferRange COMMA  std::allocator<spirv_cross::BufferRange> >(@)".}
 proc deletevector0*(self: ptr vector0) {.importcpp: "delete #".}
-proc initstdunorderedset_uint32t*(): stdunorderedset_uint32t {.importcpp: "std::unordered_set<unsigned int, std::hash<unsigned int>, std::equal_to<unsigned int>, std::allocator<unsigned int> >(@)".}
+proc initstdunorderedset_uint32t*(): stdunorderedset_uint32t {.importcpp: "std::unordered_set<unsigned int COMMA  std::hash<unsigned int> COMMA  std::equal_to<unsigned int> COMMA  std::allocator<unsigned int> >(@)".}
 proc deletestdunorderedset_uint32t*(self: ptr stdunorderedset_uint32t) {.importcpp: "delete #".}
 proc initallocator0000000000000000000000000000*(): allocator0000000000000000000000000000 {.importcpp: "std::allocator<spirv_cross::CombinedImageSampler>(@)".}
 proc deleteallocator0000000000000000000000000000*(self: ptr allocator0000000000000000000000000000) {.importcpp: "delete #".}
-proc initstdvector_CombinedImageSampler*(): stdvector_CombinedImageSampler {.importcpp: "std::vector<spirv_cross::CombinedImageSampler, std::allocator<spirv_cross::CombinedImageSampler> >(@)".}
+proc initstdvector_CombinedImageSampler*(): stdvector_CombinedImageSampler {.importcpp: "std::vector<spirv_cross::CombinedImageSampler COMMA  std::allocator<spirv_cross::CombinedImageSampler> >(@)".}
 proc deletestdvector_CombinedImageSampler*(self: ptr stdvector_CombinedImageSampler) {.importcpp: "delete #".}
 proc inita000000000000*(): a000000000000 {.importcpp: "(@)".}
 proc deletea000000000000*(self: ptr a000000000000) {.importcpp: "delete #".}
-proc initVariableTypeRemapCallback*(): VariableTypeRemapCallback {.importcpp: "std::function<void (const spirv_cross::SPIRType &, const std::basic_string<char, std::char_traits<char>, std::allocator<char> > &, std::basic_string<char, std::char_traits<char>, std::allocator<char> > &)>(@)".}
+proc initVariableTypeRemapCallback*(): VariableTypeRemapCallback {.importcpp: "std::function<void (const spirv_cross::SPIRType & COMMA  const std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> > & COMMA  std::basic_string<char COMMA  std::char_traits<char> COMMA  std::allocator<char> > &)>(@)".}
 proc deleteVariableTypeRemapCallback*(self: ptr VariableTypeRemapCallback) {.importcpp: "delete #".}
 proc inita00000000000000*(): a00000000000000 {.importcpp: "(@)".}
 proc deletea00000000000000*(self: ptr a00000000000000) {.importcpp: "delete #".}
@@ -1018,25 +1018,25 @@ proc inita0000000000000000*(): a0000000000000000 {.importcpp: "(@)".}
 proc deletea0000000000000000*(self: ptr a0000000000000000) {.importcpp: "delete #".}
 proc initallocator000000000000000000000000000000*(): allocator000000000000000000000000000000 {.importcpp: "std::allocator<spirv_cross::SpecializationConstant>(@)".}
 proc deleteallocator000000000000000000000000000000*(self: ptr allocator000000000000000000000000000000) {.importcpp: "delete #".}
-proc initvector000*(): vector000 {.importcpp: "std::vector<spirv_cross::SpecializationConstant, std::allocator<spirv_cross::SpecializationConstant> >(@)".}
+proc initvector000*(): vector000 {.importcpp: "std::vector<spirv_cross::SpecializationConstant COMMA  std::allocator<spirv_cross::SpecializationConstant> >(@)".}
 proc deletevector000*(self: ptr vector000) {.importcpp: "delete #".}
 proc initallocator00000000000000000000000000000000*(): allocator00000000000000000000000000000000 {.importcpp: "std::allocator<spv::Capability>(@)".}
 proc deleteallocator00000000000000000000000000000000*(self: ptr allocator00000000000000000000000000000000) {.importcpp: "delete #".}
-proc initstdvector_spvCapability*(): stdvector_spvCapability {.importcpp: "std::vector<spv::Capability, std::allocator<spv::Capability> >(@)".}
+proc initstdvector_spvCapability*(): stdvector_spvCapability {.importcpp: "std::vector<spv::Capability COMMA  std::allocator<spv::Capability> >(@)".}
 proc deletestdvector_spvCapability*(self: ptr stdvector_spvCapability) {.importcpp: "delete #".}
 proc initallocator0000000000000000000000000000000000*(): allocator0000000000000000000000000000000000 {.importcpp: "std::allocator<spirv_cross::PlsRemap>(@)".}
 proc deleteallocator0000000000000000000000000000000000*(self: ptr allocator0000000000000000000000000000000000) {.importcpp: "delete #".}
-proc initstdvector_PlsRemap*(): stdvector_PlsRemap {.importcpp: "std::vector<spirv_cross::PlsRemap, std::allocator<spirv_cross::PlsRemap> >(@)".}
+proc initstdvector_PlsRemap*(): stdvector_PlsRemap {.importcpp: "std::vector<spirv_cross::PlsRemap COMMA  std::allocator<spirv_cross::PlsRemap> >(@)".}
 proc deletestdvector_PlsRemap*(self: ptr stdvector_PlsRemap) {.importcpp: "delete #".}
 proc initallocator000000000000000000000000000000000000*(): allocator000000000000000000000000000000000000 {.importcpp: "std::allocator<spirv_cross::HLSLVertexAttributeRemap>(@)".}
 proc deleteallocator000000000000000000000000000000000000*(self: ptr allocator000000000000000000000000000000000000) {.importcpp: "delete #".}
-proc initstdvector_HLSLVertexAttributeRemap*(): stdvector_HLSLVertexAttributeRemap {.importcpp: "std::vector<spirv_cross::HLSLVertexAttributeRemap, std::allocator<spirv_cross::HLSLVertexAttributeRemap> >(@)".}
+proc initstdvector_HLSLVertexAttributeRemap*(): stdvector_HLSLVertexAttributeRemap {.importcpp: "std::vector<spirv_cross::HLSLVertexAttributeRemap COMMA  std::allocator<spirv_cross::HLSLVertexAttributeRemap> >(@)".}
 proc deletestdvector_HLSLVertexAttributeRemap*(self: ptr stdvector_HLSLVertexAttributeRemap) {.importcpp: "delete #".}
 proc initallocator00000000000000000000000000000000000000*(): allocator00000000000000000000000000000000000000 {.importcpp: "std::allocator<spirv_cross::MSLVertexAttr>(@)".}
 proc deleteallocator00000000000000000000000000000000000000*(self: ptr allocator00000000000000000000000000000000000000) {.importcpp: "delete #".}
-proc initvector00000*(): vector00000 {.importcpp: "std::vector<spirv_cross::MSLVertexAttr, std::allocator<spirv_cross::MSLVertexAttr> >(@)".}
+proc initvector00000*(): vector00000 {.importcpp: "std::vector<spirv_cross::MSLVertexAttr COMMA  std::allocator<spirv_cross::MSLVertexAttr> >(@)".}
 proc deletevector00000*(self: ptr vector00000) {.importcpp: "delete #".}
 proc initallocator0000000000000000000000000000000000000000*(): allocator0000000000000000000000000000000000000000 {.importcpp: "std::allocator<spirv_cross::MSLResourceBinding>(@)".}
 proc deleteallocator0000000000000000000000000000000000000000*(self: ptr allocator0000000000000000000000000000000000000000) {.importcpp: "delete #".}
-proc initvector0000000*(): vector0000000 {.importcpp: "std::vector<spirv_cross::MSLResourceBinding, std::allocator<spirv_cross::MSLResourceBinding> >(@)".}
+proc initvector0000000*(): vector0000000 {.importcpp: "std::vector<spirv_cross::MSLResourceBinding COMMA  std::allocator<spirv_cross::MSLResourceBinding> >(@)".}
 proc deletevector0000000*(self: ptr vector0000000) {.importcpp: "delete #".}

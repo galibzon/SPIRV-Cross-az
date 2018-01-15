@@ -50,3 +50,17 @@ template constnessExport*(x: untyped, inputType: untyped, outputType: untyped): 
     constify(x)
   else:
     x
+
+# iterator utils
+type CppIterator* {.importcpp: "'0::iterator".} [T] = object
+proc itBegin [T] (cset: T): CppIterator[T] {.importcpp:"#.begin()".}
+proc itEnd [T] (cset: T): CppIterator[T] {.importcpp:"#.end()".}
+proc itPlusPlus [T] (csetIt: var CppIterator[T]): CppIterator[T] {.importcpp:"(++#)".}
+proc itValue [T, R] (csetIt: var CppIterator[T]): R {.importcpp:"(*#)".}
+proc itEqual [T] (csetIt: var CppIterator[T], csetIt2: var CppIterator[T]): bool {.importcpp:"operator==(#, #)".}
+iterator cppItems*[T, R](cset: var T): R =
+  var it = cset.itBegin()
+  var itend =  cset.itEnd()
+  while not itEqual(it, itend):
+    yield itValue[T, R](it)
+    it = it.itPlusPlus

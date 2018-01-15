@@ -6,8 +6,9 @@
 import cpp_utilities, gen_spirvcross, math
 proc pushback(vec: spirv, v: uint32) {.importcpp:"#.push_back(#)".}
 proc cstr(str: astring): cstring {.importcpp:"#.c_str()".}
-proc size(res: stdvector_Resource): csize {.importcpp:"#.size()".}
-proc `[]`(res: var stdvector_Resource, index: cint): Resource {.importcpp:"#[#]".}
+proc cstr(str: constType[astring]): cstring {.importcpp:"#.c_str()".}
+proc size(res: stdvector_Resource | vector000 | stdunorderedset_uint32t): csize {.importcpp:"#.size()".} 
+proc `[]`(res: var stdvector_Resource | var vector000, index: cint): Resource {.importcpp:"#[#]".}
 
 import moustachu
 let shaderJsTemplate = """
@@ -16,7 +17,7 @@ let shaderJsTemplate = """
 var {{ShaderName}} = pc.createScript('{{ShaderName}}');
 
 {{#FloatAttrib}}
-{{ShaderName}}.attributes.add({{AttribName}}, { type: 'number', default: {{DefaultValue}} });
+{{ShaderName}}.attributes.add('{{AttribName}}', { type: 'number', default: {{DefaultValue}} });
 
 {{/FloatAttrib}}
 {{#TextureAttrib}}
@@ -33,12 +34,10 @@ var {{ShaderName}} = pc.createScript('{{ShaderName}}');
     var gd = app.graphicsDevice;
 
     var vertexShader = `
-{{VertexShaderBody}}
-`;
+{{VertexShaderBody}}`;
 
     var pixelShader = `
-{{PixelShaderBody}}
-`;
+{{PixelShaderBody}}`;
 
     var shaderDefinition = {
         attributes: {
@@ -46,7 +45,7 @@ var {{ShaderName}} = pc.createScript('{{ShaderName}}');
             aUv0: pc.SEMANTIC_TEXCOORD0
         },
         vshader: vertexShader,
-        fshader: fragmentShader
+        fshader: pixelShader
     };
 
     // Create the shader from the definition
@@ -55,6 +54,21 @@ var {{ShaderName}} = pc.createScript('{{ShaderName}}');
     // Create a new material and set the shader
     this.material = new pc.Material();
     this.material.setShader(this.shader);
+
+    {{#SetFloats}}
+    this.material.setParameter('{{AttribName}}', this.{{AttribName}});
+    this.on('attr:{{AttribName}}', function (value, prev) {
+      this.reloadShader();
+    });
+
+    {{/SetFloats}}
+    {{#SetTextures}}
+    this.material.setParameter('{{TextureName}}', this.{{TextureName}}.resource);
+    this.on('attr:{{TextureName}}', function (value, prev) {
+      this.reloadShader();
+    });
+
+    {{/SetTextures}}
 
     // Replace the material on the model with our new material
     model.meshInstances[0].material = this.material;
@@ -70,75 +84,84 @@ var {{ShaderName}} = pc.createScript('{{ShaderName}}');
 };
 """
 
-# ..\tmp\glslang-install\bin\glslangValidator.exe -H -V -o test.spv shaders\frag\basic.frag
-var spirvFile = open("vert.spv")
-var spirvFileSize32 = int ceil int(spirvFile.getFileSize) / 4
-var buffer = newSeq[uint8](spirvFile.getFileSize)
-var spirvData = initspirv()
-assert(spirvFile.readBytes(buffer, 0, spirvFile.getFileSize) == spirvFile.getFileSize)
-for i in 0..<spirvFileSize32:
-  var index = i * 4
-  var val = cast[ptr uint32](addr(buffer[index]))
-  spirvData.pushback(val[])
+proc openSpirv(spvFile: string): ptr spirv =
+  var spirvFile = open(spvFile)
+  var spirvFileSize32 = int ceil int(spirvFile.getFileSize) / 4
+  var buffer = newSeq[uint8](spirvFile.getFileSize)
+  result = cppnew initspirv()
+  assert(spirvFile.readBytes(buffer, 0, spirvFile.getFileSize) == spirvFile.getFileSize)
+  for i in 0..<spirvFileSize32:
+    var index = i * 4
+    var val = cast[ptr uint32](addr(buffer[index]))
+    result[].pushback(val[])
 
-var glsl = cppnew initCompilerGLSL(spirvData)
-var glslOptions = initOptions()
-glslOptions.es = true
-glslOptions.version = 100
-# glslOptions.vulkansemantics = true
-glsl[].setoptions(glslOptions)
-# glsl.AsCompiler()[].buildcombinedimagesamplers()
-var glslCompiled = glsl.AsCompiler()[].compile()
-echo "GLSL:"
-echo glslCompiled.cstr
+proc close(spv: ptr spirv) =
+  deletespirv spv
 
-var resources = glsl.AsCompiler()[].getshaderresources()
+# template printInfo(glsl: typed): untyped =
+#   var decorationSet = glsl.AsCompiler()[].getdecoration(resource.id, spvDecoration.DecorationDescriptorSet)
+#   var decorationBinding = glsl.AsCompiler()[].getdecoration(resource.id, spvDecoration.DecorationBinding)
+#   var decorationLocation = glsl.AsCompiler()[].getdecoration(resource.id, spvDecoration.DecorationLocation)
+#   echo resource.name.cstr, " ", $decorationSet, " ", $decorationBinding, " ", $decorationLocation
 
-template printInfo(): untyped =
-  var decorationSet = glsl.AsCompiler()[].getdecoration(resource.id, spvDecoration.DecorationDescriptorSet)
-  var decorationBinding = glsl.AsCompiler()[].getdecoration(resource.id, spvDecoration.DecorationBinding)
-  var decorationLocation = glsl.AsCompiler()[].getdecoration(resource.id, spvDecoration.DecorationLocation)
-  echo resource.name.cstr, " ", $decorationSet, " ", $decorationBinding, " ", $decorationLocation
+proc compileToWebGL1(vertSpv, fragSpv: ptr spirv): string =
+  var vert = openSpirv("vert.spv")
+  var frag = openSpirv("frag.spv")
 
-var sampledImages = resources.sampledimages
-# var sampledImage
-echo "SAMPLED IMAGES:"
-for i in 0..<sampledImages.size:
-  var resource = sampledImages[cint i]
-  printInfo()
+  var finalCode = newContext()
+  finalCode["ShaderName"] = "MyShader"
 
-var storageImages = resources.storageimages
-echo "STORAGE IMAGES:"
-for i in 0..<storageImages.size:
-  var resource = storageImages[cint i]
-  printInfo()
+  var glslOptions = initOptions()
+  glslOptions.es = true
+  glslOptions.version = 100
 
-var separateImages = resources.separateimages
-echo "SEPARATE IMAGES:"
-for i in 0..<separateImages.size:
-  var resource = separateImages[cint i]
-  printInfo()
+  var vertGlsl = cppnew initCompilerGLSL(vert[])
+  vertGlsl[].setoptions(glslOptions)
+  var vertCompiled = vertGlsl.AsCompiler()[].compile()
+  finalCode["VertexShaderBody"] = $vertCompiled.cstr
+  deleteCompilerGLSL vertGlsl
+
+  var fragGlsl = cppnew initCompilerGLSL(frag[])
   
-var stageInputs = resources.stageinputs
-echo "STAGE INPUTS:"
-for i in 0..<stageInputs.size:
-  var resource = stageInputs[cint i]
-  printInfo()
+  # find floats and textures
+  var fragResources = fragGlsl.AsCompiler()[].getshaderresources()
 
-var stageOutputs = resources.stageoutputs
-echo "STAGE INPUTS:"
-for i in 0..<stageOutputs.size:
-  var resource = stageOutputs[cint i]
-  printInfo()
+  var textureSlots = newSeq[Context]()
+  var fragSampledImages = fragResources.sampledimages
+  for i in 0..<fragSampledImages.size:
+    var resource = fragSampledImages[cint i]
+    # printInfo fragGlsl
+    var textureAttrib = newContext()
+    textureAttrib["TextureName"] = $resource.name.cstr
+    textureSlots.add(textureAttrib)
 
-# var hlsl = cppnew initCompilerHLSL(spirvData)
-# var hlslCompiled = hlsl[].compile()
-# echo "HLSL:"
-# echo hlslCompiled.cstr
+  finalCode["TextureAttrib"] = textureSlots
+  finalCode["SetTextures"] = textureSlots
 
-# var cpp = cppnew initCompilerCPP(spirvData)
-# cpp.AsCompilerGLSL.AsCompiler()[].buildcombinedimagesamplers()
-# var cppCompiled = cpp[].compile()
-# echo "CPP:"
-# echo cppCompiled.cstr
+  var floatSlots = newSeq[Context]()
+  var variables = fragGlsl.AsCompiler()[].getactiveinterfacecvariables()
+  for vid in cppItems[stdunorderedset_uint32t, uint32](variables):
+    var baseType = @(fragGlsl.AsCompiler()[].gettypecfromcvariable(vid)).basetype
+    if fragGlsl.AsCompiler()[].getstorageclass(vid) == spvStorageClass.StorageClassUniformConstant and baseType == SPIRTypeBaseType.Float:
+      var floatAttrib = newContext()
+      floatAttrib["AttribName"] = $fragGlsl.AsCompiler()[].getname(vid).cstr
+      floatAttrib["DefaultValue"] = "0.0"
+      floatSlots.add(floatAttrib)
 
+  finalCode["FloatAttrib"] = floatSlots
+  finalCode["SetFloats"] = floatSlots
+
+  # finally compile
+  fragGlsl[].setoptions(glslOptions)
+  var fragCompiled = fragGlsl.AsCompiler()[].compile()
+  finalCode["PixelShaderBody"] = $fragCompiled.cstr
+  deleteCompilerGLSL fragGlsl
+  
+  close vert
+  close frag
+
+  return shaderJsTemplate.render finalCode
+
+var vert = openSpirv("vert.spv")
+var frag = openSpirv("frag.spv")
+echo compileToWebGL1(vert, frag)
