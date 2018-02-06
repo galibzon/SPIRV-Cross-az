@@ -3,12 +3,26 @@
 {.compile:"spirv_glsl.cpp".}
 {.compile:"spirv_hlsl.cpp".}
 {.compile:"spirv_cpp.cpp".}
-import cpp_utilities, gen_spirvcross, math
-proc pushback(vec: spirv, v: uint32) {.importcpp:"#.push_back(#)".}
-proc cstr(str: astring): cstring {.importcpp:"#.c_str()".}
-proc cstr(str: constType[astring]): cstring {.importcpp:"#.c_str()".}
-proc size(res: stdvector_Resource | vector000 | stdunorderedset_uint32t): csize {.importcpp:"#.size()".} 
-proc `[]`(res: var stdvector_Resource | var vector000, index: cint): Resource {.importcpp:"#[#]".}
+
+import cpp_utilities, gen_spirvcross, math, cccobject, macros
+
+{.emit:"using namespace std;".}
+
+type spirv {.header:"vector", importcpp:"std::vector<unsigned int>".} = object
+proc isCCCConcept*(T: typedesc[spirv]): bool = true
+type unordered_set_uint {.header:"unordered_set", importcpp:"std::unordered_set<unsigned int>".} = object
+proc isCCCConcept*(T: typedesc[unordered_set_uint]): bool = true
+type resource_vector {.header:"vector", importcpp:"std::vector<spirv_cross::Resource>".} = object
+proc isCCCConcept*(T: typedesc[resource_vector]): bool = true
+# proc `[]`(res: var resource_vector, index: cint): Resource {.importcpp:"#[#]".}
+
+type astring {.header:"string", importcpp:"std::string".} = object
+proc isCCCConcept*(T: typedesc[astring]): bool = true
+
+# proc pushback(vec: spirv, v: uint32) {.importcpp:"#.push_back(#)".}
+# proc cstr(str: astring): cstring {.importcpp:"#.c_str()".}
+# proc cstr(str: constType[astring]): cstring {.importcpp:"#.c_str()".}
+# proc size(res: stdvector_Resource | vector000 | stdunorderedset_uint32t): csize {.importcpp:"#.size()".} 
 
 import moustachu
 let shaderJsTemplate = """
@@ -85,18 +99,19 @@ var {{ShaderName}} = pc.createScript('{{ShaderName}}');
 """
 
 proc openSpirv(spvFile: string): ptr spirv =
+  cppnewptr(result)
+
   var spirvFile = open(spvFile)
   var spirvFileSize32 = int ceil int(spirvFile.getFileSize) / 4
   var buffer = newSeq[uint8](spirvFile.getFileSize)
-  result = cppnew initspirv()
   assert(spirvFile.readBytes(buffer, 0, spirvFile.getFileSize) == spirvFile.getFileSize)
   for i in 0..<spirvFileSize32:
-  var index = i * 4
-  var val = cast[ptr uint32](addr(buffer[index]))
-  result[].pushback(val[])
+    var index = i * 4
+    var val = cast[ptr uint32](addr(buffer[index]))
+    result[].push_back(val[]).to(void)
 
 proc close(spv: ptr spirv) =
-  deletespirv spv
+  spv.cppdelptr
 
 # template printInfo(glsl: typed): untyped =
 #   var decorationSet = glsl.AsCompiler()[].getdecoration(resource.id, spvDecoration.DecorationDescriptorSet)
@@ -105,63 +120,63 @@ proc close(spv: ptr spirv) =
 #   echo resource.name.cstr, " ", $decorationSet, " ", $decorationBinding, " ", $decorationLocation
 
 proc compileToWebGL1(vertSpv, fragSpv: ptr spirv): string =
-  var vert = openSpirv("vert.spv")
-  var frag = openSpirv("frag.spv")
-
   var finalCode = newContext()
   finalCode["ShaderName"] = "MyShader"
 
-  var glslOptions = initOptions()
+  var glslOptions: Options
   glslOptions.es = true
   glslOptions.version = 100
 
-  var vertGlsl = cppnew initCompilerGLSL(vert[])
-  vertGlsl[].setoptions(glslOptions)
-  var vertCompiled = vertGlsl.AsCompiler()[].compile()
-  finalCode["VertexShaderBody"] = $vertCompiled.cstr
-  deleteCompilerGLSL vertGlsl
+  var vertGlsl: ref CompilerGLSL
+  cppnewref(vertGlsl, vertSpv[])
 
-  var fragGlsl = cppnew initCompilerGLSL(frag[])
+  vertGlsl[].set_options(glslOptions).to(void)
+  var vertCompiled = vertGlsl[].compile().to(astring)
+  finalCode["VertexShaderBody"] = $vertCompiled.c_str().to(cstring)
+
+  var fragGlsl: ref CompilerGLSL
+  cppnewref(fragGlsl, fragSpv[])
   
   # find floats and textures
-  var fragResources = fragGlsl.AsCompiler()[].getshaderresources()
+  var fragResources = fragGlsl[].get_shader_resources().to(ShaderResources)
 
   var textureSlots = newSeq[Context]()
-  var fragSampledImages = fragResources.sampledimages
-  for i in 0..<fragSampledImages.size:
-  var resource = fragSampledImages[cint i]
-  # printInfo fragGlsl
-  var textureAttrib = newContext()
-  textureAttrib["TextureName"] = $resource.name.cstr
-  textureSlots.add(textureAttrib)
+  var fragSampledImages = fragResources.sampled_images.to(resource_vector)
+  for i in 0..<fragSampledImages.size().to(cint):
+    var resource = fragSampledImages[i].to(Resource)
+    # printInfo fragGlsl
+    var textureAttrib = newContext()
+    var resourceName = resource.name.to(astring)
+    textureAttrib["TextureName"] = $resourceName.c_str().to(cstring)
+    textureSlots.add(textureAttrib)
 
   finalCode["TextureAttrib"] = textureSlots
   finalCode["SetTextures"] = textureSlots
 
   var floatSlots = newSeq[Context]()
-  var variables = fragGlsl.AsCompiler()[].getactiveinterfacecvariables()
-  for vid in cppItems[stdunorderedset_uint32t, uint32](variables):
-  var baseType = @(fragGlsl.AsCompiler()[].gettypecfromcvariable(vid)).basetype
-  if fragGlsl.AsCompiler()[].getstorageclass(vid) == spvStorageClass.StorageClassUniformConstant and baseType == SPIRTypeBaseType.Float:
-    var floatAttrib = newContext()
-    floatAttrib["AttribName"] = $fragGlsl.AsCompiler()[].getname(vid).cstr
-    floatAttrib["DefaultValue"] = "0.0"
-    floatSlots.add(floatAttrib)
+  var variables = fragGlsl[].get_active_interface_variables().to(unordered_set_uint)
+  for vid in cppItems[unordered_set_uint, uint32](variables):
+    var itemType = fragGlsl[].get_type_from_variable(vid).to(SPIRType)
+    var baseType = itemType.basetype.to(SPIRTypeBaseType)
+    if fragGlsl[].get_storage_class(vid).to(spvStorageClass) == spvStorageClass.StorageClassUniformConstant and baseType == SPIRTypeBaseType.Float:
+      var floatAttrib = newContext()
+      var attribStr = fragGlsl[].get_name(vid).to(astring)
+      floatAttrib["AttribName"] = $attribStr.c_str().to(cstring)
+      floatAttrib["DefaultValue"] = "0.0"
+      floatSlots.add(floatAttrib)
 
   finalCode["FloatAttrib"] = floatSlots
   finalCode["SetFloats"] = floatSlots
 
   # finally compile
-  fragGlsl[].setoptions(glslOptions)
-  var fragCompiled = fragGlsl.AsCompiler()[].compile()
-  finalCode["PixelShaderBody"] = $fragCompiled.cstr
-  deleteCompilerGLSL fragGlsl
-  
-  close vert
-  close frag
+  fragGlsl[].set_options(glslOptions).to(void)
+  var fragCompiled = fragGlsl[].compile().to(astring)
+  finalCode["PixelShaderBody"] = $fragCompiled.c_str().to(cstring)
 
   return shaderJsTemplate.render finalCode
 
 var vert = openSpirv("vert.spv")
 var frag = openSpirv("frag.spv")
 echo compileToWebGL1(vert, frag)
+vert.close()
+frag.close()

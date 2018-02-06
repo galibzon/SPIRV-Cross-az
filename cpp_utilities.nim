@@ -1,4 +1,4 @@
-import typetraits, macros
+import typetraits, macros, cccobject
 macro cpp2nimRef*(procDef: untyped): untyped =
   result = procDef
 macro cpp2nimCopy*(procDef: untyped): untyped =
