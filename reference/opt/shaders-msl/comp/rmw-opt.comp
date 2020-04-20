@@ -8,6 +8,8 @@ struct SSBO
     int a;
 };
 
+constant uint3 gl_WorkGroupSize [[maybe_unused]] = uint3(1u);
+
 kernel void main0(device SSBO& _9 [[buffer(0)]])
 {
     _9.a += 10;
@@ -20,7 +22,6 @@ kernel void main0(device SSBO& _9 [[buffer(0)]])
     _9.a ^= 10;
     _9.a %= 40;
     _9.a |= 1;
-    bool _65 = false && true;
-    _9.a = int(_65 && (true || _65));
+    _9.a = 0;
 }
 

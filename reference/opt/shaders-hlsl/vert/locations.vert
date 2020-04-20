@@ -5,6 +5,8 @@ struct Foo
     float3 c;
 };
 
+static const Foo _71 = { 1.0f.xxx, 1.0f.xxx, 1.0f.xxx };
+
 static float4 gl_Position;
 static float4 Input2;
 static float4 Input4;
@@ -40,25 +42,17 @@ struct SPIRV_Cross_Output
     float4 gl_Position : SV_Position;
 };
 
-Foo _70;
-
 void vert_main()
 {
-    gl_Position = ((float4(1.0f, 1.0f, 1.0f, 1.0f) + Input2) + Input4) + Input0;
+    gl_Position = ((1.0f.xxxx + Input2) + Input4) + Input0;
     vLocation0 = 0.0f;
     vLocation1 = 1.0f;
     vLocation2[0] = 2.0f;
     vLocation2[1] = 2.0f;
-    Foo _65 = _70;
-    _65.a = float3(1.0f, 1.0f, 1.0f);
-    Foo _67 = _65;
-    _67.b = float3(1.0f, 1.0f, 1.0f);
-    Foo _69 = _67;
-    _69.c = float3(1.0f, 1.0f, 1.0f);
-    vLocation4 = _69;
+    vLocation4 = _71;
     vLocation9 = 9.0f;
-    vout.color = float3(2.0f, 2.0f, 2.0f);
-    vout.foo = float3(4.0f, 4.0f, 4.0f);
+    vout.color = 2.0f.xxx;
+    vout.foo = 4.0f.xxx;
 }
 
 SPIRV_Cross_Output main(SPIRV_Cross_Input stage_input, out VertexOut stage_outputvout)

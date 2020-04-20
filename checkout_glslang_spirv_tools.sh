@@ -1,7 +1,14 @@
 #!/bin/bash
 
-GLSLANG_REV=698bf7547a96b6feb7291e8ddc0d5d16475dbae2
-SPIRV_TOOLS_REV=e28edd458b729da7bbfd51e375feb33103709e6f
+GLSLANG_REV=344bd0889ac98c5369df2bf359d0369e3d235b62
+SPIRV_TOOLS_REV=fd773eb50d628c1981338addc093df879757c2cf
+SPIRV_HEADERS_REV=f8bf11a0253a32375c32cad92c841237b96696c0
+
+if [ -z $PROTOCOL ]; then
+	PROTOCOL=git
+fi
+
+echo "Using protocol \"$PROTOCOL\" for checking out repositories. If this is problematic, try PROTOCOL=https $0."
 
 if [ -d external/glslang ]; then
 	echo "Updating glslang to revision $GLSLANG_REV."
@@ -12,17 +19,10 @@ else
 	echo "Cloning glslang revision $GLSLANG_REV."
 	mkdir -p external
 	cd external
-	git clone git://github.com/KhronosGroup/glslang.git
+	git clone $PROTOCOL://github.com/KhronosGroup/glslang.git
 	cd glslang
 	git checkout $GLSLANG_REV
 fi
-cd ../..
-
-echo "Building glslang."
-mkdir -p external/glslang-build
-cd external/glslang-build
-cmake ../glslang -DCMAKE_BUILD_TYPE=Release -G"Unix Makefiles"
-make -j$(nproc)
 cd ../..
 
 if [ -d external/spirv-tools ]; then
@@ -34,24 +34,22 @@ else
 	echo "Cloning SPIRV-Tools revision $SPIRV_TOOLS_REV."
 	mkdir -p external
 	cd external
-	git clone git://github.com/KhronosGroup/SPIRV-Tools.git spirv-tools
+	git clone $PROTOCOL://github.com/KhronosGroup/SPIRV-Tools.git spirv-tools
 	cd spirv-tools
 	git checkout $SPIRV_TOOLS_REV
-
-	if [ -d external/spirv-headers ]; then
-		cd external/spirv-headers
-		git pull origin master
-		cd ../..
-	else
-		git clone git://github.com/KhronosGroup/SPIRV-Headers.git external/spirv-headers
-	fi
 fi
-cd ../..
 
-echo "Building SPIRV-Tools."
-mkdir -p external/spirv-tools-build
-cd external/spirv-tools-build
-cmake ../spirv-tools -DCMAKE_BUILD_TYPE=Release -G"Unix Makefiles"
-make -j$(nproc)
+if [ -d external/spirv-headers ]; then
+	cd external/spirv-headers
+	git pull origin master
+	git checkout $SPIRV_HEADERS_REV
+	cd ../..
+else
+	git clone $PROTOCOL://github.com/KhronosGroup/SPIRV-Headers.git external/spirv-headers
+	cd external/spirv-headers
+	git checkout $SPIRV_HEADERS_REV
+	cd ../..
+fi
+
 cd ../..
 

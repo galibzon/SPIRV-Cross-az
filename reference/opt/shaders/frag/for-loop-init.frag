@@ -6,55 +6,63 @@ layout(location = 0) out mediump int FragColor;
 
 void main()
 {
-    int _12;
-    mediump int _27;
-    int _26;
-    mediump int _43;
-    mediump int _59;
-    mediump int _83;
-    ivec2 _93;
-    ivec2 _139;
-    mediump int _62;
-    mediump int _128;
-    FragColor = 16;
-    for (int _140 = 0; _140 < 25; _27 = _140 + 1, _140 = _27)
+    switch (0u)
     {
-        FragColor += 10;
-    }
-    for (int _141 = 1; _141 < 30; _43 = _141 + 1, _141 = _43)
-    {
-        FragColor += 11;
-    }
-    int _142;
-    _142 = 0;
-    for (; _142 < 20; _59 = _142 + 1, _142 = _59)
-    {
-        FragColor += 12;
-    }
-    _62 = _142 + 3;
-    FragColor += _62;
-    if (_62 == 40)
-    {
-        for (int _143 = 0; _143 < 40; _83 = _143 + 1, _143 = _83)
+        default:
         {
-            FragColor += 13;
+            FragColor = 16;
+            for (mediump int _143 = 0; _143 < 25; )
+            {
+                FragColor += 10;
+                _143++;
+                continue;
+            }
+            for (mediump int _144 = 1; _144 < 30; )
+            {
+                FragColor += 11;
+                _144++;
+                continue;
+            }
+            mediump int _145;
+            _145 = 0;
+            for (; _145 < 20; )
+            {
+                FragColor += 12;
+                _145++;
+                continue;
+            }
+            mediump int _62 = _145 + 3;
+            FragColor += _62;
+            if (_62 == 40)
+            {
+                for (mediump int _149 = 0; _149 < 40; )
+                {
+                    FragColor += 13;
+                    _149++;
+                    continue;
+                }
+                break;
+            }
+            FragColor += _62;
+            mediump ivec2 _146;
+            _146 = ivec2(0);
+            for (; _146.x < 10; )
+            {
+                FragColor += _146.y;
+                mediump ivec2 _142 = _146;
+                _142.x = _146.x + 4;
+                _146 = _142;
+                continue;
+            }
+            for (mediump int _148 = _62; _148 < 40; )
+            {
+                FragColor += _148;
+                _148++;
+                continue;
+            }
+            FragColor += _62;
+            break;
         }
-        return;
     }
-    else
-    {
-        FragColor += _62;
-    }
-    ivec2 _144;
-    _144 = ivec2(0);
-    for (; _144.x < 10; _139 = _144, _139.x = _144.x + 4, _144 = _139)
-    {
-        FragColor += _144.y;
-    }
-    for (int _145 = _62; _145 < 40; _128 = _145 + 1, _145 = _128)
-    {
-        FragColor += _145;
-    }
-    FragColor += _62;
 }
 

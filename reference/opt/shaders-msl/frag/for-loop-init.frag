@@ -11,56 +11,64 @@ struct main0_out
 fragment main0_out main0()
 {
     main0_out out = {};
-    int _12;
-    int _27;
-    int _26;
-    int _43;
-    int _59;
-    int _83;
-    int2 _93;
-    int2 _139;
-    int _62;
-    int _128;
-    out.FragColor = 16;
-    for (int _140 = 0; _140 < 25; _27 = _140 + 1, _140 = _27)
+    switch (0u)
     {
-        out.FragColor += 10;
-    }
-    for (int _141 = 1; _141 < 30; _43 = _141 + 1, _141 = _43)
-    {
-        out.FragColor += 11;
-    }
-    int _142;
-    _142 = 0;
-    for (; _142 < 20; _59 = _142 + 1, _142 = _59)
-    {
-        out.FragColor += 12;
-    }
-    _62 = _142 + 3;
-    out.FragColor += _62;
-    if (_62 == 40)
-    {
-        for (int _143 = 0; _143 < 40; _83 = _143 + 1, _143 = _83)
+        default:
         {
-            out.FragColor += 13;
+            out.FragColor = 16;
+            for (int _143 = 0; _143 < 25; )
+            {
+                out.FragColor += 10;
+                _143++;
+                continue;
+            }
+            for (int _144 = 1; _144 < 30; )
+            {
+                out.FragColor += 11;
+                _144++;
+                continue;
+            }
+            int _145;
+            _145 = 0;
+            for (; _145 < 20; )
+            {
+                out.FragColor += 12;
+                _145++;
+                continue;
+            }
+            int _62 = _145 + 3;
+            out.FragColor += _62;
+            if (_62 == 40)
+            {
+                for (int _149 = 0; _149 < 40; )
+                {
+                    out.FragColor += 13;
+                    _149++;
+                    continue;
+                }
+                break;
+            }
+            out.FragColor += _62;
+            int2 _146;
+            _146 = int2(0);
+            for (; _146.x < 10; )
+            {
+                out.FragColor += _146.y;
+                int2 _142 = _146;
+                _142.x = _146.x + 4;
+                _146 = _142;
+                continue;
+            }
+            for (int _148 = _62; _148 < 40; )
+            {
+                out.FragColor += _148;
+                _148++;
+                continue;
+            }
+            out.FragColor += _62;
+            break;
         }
-        return out;
     }
-    else
-    {
-        out.FragColor += _62;
-    }
-    int2 _144;
-    _144 = int2(0);
-    for (; _144.x < 10; _139 = _144, _139.x = _144.x + 4, _144 = _139)
-    {
-        out.FragColor += _144.y;
-    }
-    for (int _145 = _62; _145 < 40; _128 = _145 + 1, _145 = _128)
-    {
-        out.FragColor += _145;
-    }
-    out.FragColor += _62;
     return out;
 }
 
